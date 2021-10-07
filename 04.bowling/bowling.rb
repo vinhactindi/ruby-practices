@@ -15,8 +15,6 @@ end
 
 frames = shots.each_slice(2).to_a
 
-puts frames.to_s
-
 point = 0
 frames.each_with_index do |frame, index|
   break if index == 10
