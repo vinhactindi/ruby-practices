@@ -20,8 +20,9 @@ def entry_list_of(directories)
 end
 
 def entries_printer(entries, columns = 3)
-  entries.each_slice(columns) do |entry_line|
-    entry_line.each { |entry| print entry.ljust(SPACING) }
+  culumn_height = (entries.length / columns.to_f).ceil
+  (0..culumn_height - 1).each do |index|
+    (0..columns).each { |n| print entries[index + n * culumn_height]&.ljust(SPACING) }
     puts
   end
 end
