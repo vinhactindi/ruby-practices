@@ -23,7 +23,6 @@ print " " * SPACING * (first_day.wday)
   month_day = date == today ? "\e[31m#{date.mday.to_s.rjust(SPACING)}\e[0m" : date.mday.to_s.rjust(SPACING)
   print month_day
   print "\n" if date.saturday?
-  date += 1
 end
 
 print "\n"
