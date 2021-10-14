@@ -4,6 +4,18 @@
 SPACING = 24
 directories = ARGV
 
+require 'optparse'
+
+@options = ARGV.getopts('a')
+
+def entries_with_options_in(dir)
+  if @options['a']
+    Dir.entries(dir).sort
+  else
+    Dir["#{dir}/*"].sort.map { |fname| fname[(dir.length + 1)..-1] }
+  end
+end
+
 def entry_list_of(directories)
   if directories.empty?
     entries = Dir['*'].sort
@@ -15,7 +27,7 @@ def entry_list_of(directories)
         next
       end
 
-      entries = Dir["#{dir}/*"].sort.map { |fname| fname[(dir.length + 1)..-1] }
+      entries = entries_with_options_in(dir)
 
       puts "#{dir}:" if directories.length > 1
       entries_printer entries
