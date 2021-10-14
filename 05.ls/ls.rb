@@ -10,6 +10,11 @@ def entry_list_of(directories)
     entries_printer entries
   else
     directories.each do |dir|
+      unless File.exist?(dir)
+        puts "#{dir}: No such file or directory"
+        next
+      end
+
       entries = Dir["#{dir}/*"].sort.map { |fname| fname[(dir.length + 1)..-1] }
 
       puts "#{dir}:" if directories.length > 1
