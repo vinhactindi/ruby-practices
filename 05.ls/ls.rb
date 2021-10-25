@@ -1,15 +1,13 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-SPACING = 24
-directories = ARGV
-
 require 'optparse'
 
-@options = ARGV.getopts('a')
+SPACING = 24
+OPTIONS = ARGV.getopts('a')
 
 def entries_with_options_in(dir)
-  if @options['a']
+  if OPTIONS['a']
     Dir.entries(dir).sort
   else
     Dir["#{dir}/*"].sort.map { |fname| fname[(dir.length + 1)..-1] }
@@ -44,4 +42,4 @@ def entries_printer(entries, columns = 3)
   end
 end
 
-entry_list_of directories
+entry_list_of ARGV
