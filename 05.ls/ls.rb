@@ -1,8 +1,18 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require 'optparse'
+
 SPACING = 24
-directories = ARGV
+OPTIONS = ARGV.getopts('a')
+
+def entries_with_options_in(dir)
+  if OPTIONS['a']
+    Dir.entries(dir).sort
+  else
+    Dir["#{dir}/*"].sort.map { |fname| fname[(dir.length + 1)..-1] }
+  end
+end
 
 def entry_list_of(directories)
   if directories.empty?
@@ -10,7 +20,12 @@ def entry_list_of(directories)
     entries_printer entries
   else
     directories.each do |dir|
-      entries = Dir["#{dir}/*"].sort.map { |fname| fname[(dir.length + 1)..-1] }
+      unless File.exist?(dir)
+        puts "#{dir}: No such file or directory"
+        next
+      end
+
+      entries = entries_with_options_in(dir)
 
       puts "#{dir}:" if directories.length > 1
       entries_printer entries
@@ -27,4 +42,4 @@ def entries_printer(entries, columns = 3)
   end
 end
 
-entry_list_of directories
+entry_list_of ARGV
