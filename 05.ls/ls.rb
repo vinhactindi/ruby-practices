@@ -4,14 +4,16 @@
 require 'optparse'
 
 SPACING = 24
-OPTIONS = ARGV.getopts('a')
+OPTIONS = ARGV.getopts('a', 'r')
 
 def entries_with_options_in(dir)
-  if OPTIONS['a']
-    Dir.entries(dir).sort
-  else
-    Dir["#{dir}/*"].sort.map { |fname| fname[(dir.length + 1)..-1] }
-  end
+  entries = Dir.entries(dir).sort
+
+  entries.reject! { |fname| fname.start_with?('.') } unless OPTIONS['a']
+
+  entries.reverse! if OPTIONS['r']
+
+  entries
 end
 
 def entry_list_of(directories)
