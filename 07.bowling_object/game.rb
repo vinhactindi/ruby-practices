@@ -33,11 +33,13 @@ class Game
   private
 
   def point_and_bonus(frame, next_frame, nnext_frame)
-    if frame.strike? && next_frame&.strike? && nnext_frame
+    return frame.score if next_frame.nil?
+
+    if frame.strike? && next_frame.strike? && nnext_frame
       20 + nnext_frame.first_shot.score
-    elsif frame.strike? && next_frame
+    elsif frame.strike?
       10 + next_frame.first_shot.score + next_frame.second_shot.score
-    elsif frame.spare? && next_frame
+    elsif frame.spare?
       10 + next_frame.first_shot.score
     else
       frame.score
