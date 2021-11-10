@@ -68,9 +68,7 @@ def time(file)
 end
 
 def entries_with_options_in(dir)
-  entries = Dir.entries(dir).sort
-
-  entries = Dir.glob("#{dir}/*").sort if OPTIONS['l']
+  entries = Dir.glob("#{dir}/*").sort
 
   entries = Dir.glob("#{dir}/*", File::FNM_DOTMATCH).sort if OPTIONS['a']
 
@@ -99,15 +97,20 @@ def entry_list_of(directories)
   end
 end
 
-def entries_printer(entries, columns = 3)
+def entries_printer(entries)
   if OPTIONS['l']
     entries_printer_with_stats(entries)
-    return
+  else
+    entries_printer_with_columns(entries)
   end
+end
 
+def entries_printer_with_columns(entries, columns = 3)
   culumn_height = (entries.length / columns.to_f).ceil
   (0..culumn_height - 1).each do |index|
-    (0..columns).each { |n| print entries[index + n * culumn_height]&.ljust(SPACING) }
+    (0..columns).each do |n|
+      print File.basename(entries[index + n * culumn_height]).ljust(SPACING) if entries[index + n * culumn_height]
+    end
     puts
   end
 end
