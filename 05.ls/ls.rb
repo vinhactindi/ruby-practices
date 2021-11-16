@@ -68,12 +68,16 @@ def time(file)
 end
 
 def entries_with_options_in(dir)
+  # -lオプションとオプションなし
   entries = Dir.glob("#{dir}/*").sort
 
+  # -aオプション
   entries = Dir.glob("#{dir}/*", File::FNM_DOTMATCH).sort if OPTIONS['a']
 
+  # -rオプション
   entries.reverse! if OPTIONS['r']
 
+  # 組み合わせたオプション
   entries
 end
 
