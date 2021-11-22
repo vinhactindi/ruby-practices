@@ -25,26 +25,9 @@ class Game
   end
 
   def score
-    point = 0
-    @frames.each_with_index do |frame, index|
-      point += point_and_bonus(frame, @frames[index + 1], @frames[index + 2])
-    end
-    point
-  end
-
-  private
-
-  def point_and_bonus(frame, next_frame, nnext_frame)
-    return frame.score if next_frame.nil?
-
-    if frame.strike? && next_frame.strike? && nnext_frame
-      2 * MAX_SCORE + nnext_frame.first_shot.score
-    elsif frame.strike?
-      MAX_SCORE + next_frame.first_shot.score + next_frame.second_shot.score
-    elsif frame.spare?
-      MAX_SCORE + next_frame.first_shot.score
-    else
-      frame.score
+    @frames.each_with_index.sum do |frame, index|
+      frame.score_and_bonus(@frames[index + 1], @frames[index + 2])
     end
   end
+
 end

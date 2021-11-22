@@ -12,6 +12,20 @@ class Frame
     @third_shot = Shot.new(third_mark)
   end
 
+  def score_and_bonus(next_frame, next_next_frame)
+    return score if next_frame.nil?
+
+    if strike? && next_frame.strike? && next_next_frame
+      2 * Game::MAX_SCORE + next_next_frame.first_shot.score
+    elsif strike?
+      Game::MAX_SCORE + next_frame.first_shot.score + next_frame.second_shot.score
+    elsif spare?
+      Game::MAX_SCORE + next_frame.first_shot.score
+    else
+      score
+    end
+  end
+
   def score
     [first_shot.score, second_shot.score, @third_shot.score].sum
   end
