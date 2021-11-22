@@ -3,8 +3,6 @@
 require './frame'
 
 class Game
-  MAX_SCORE = 10
-
   attr_reader :frames
 
   def initialize(score)

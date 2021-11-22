@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 require './shot'
-require './game'
 
 class Frame
+  MAX_SCORE = 10
+
   attr_reader :first_shot, :second_shot
 
   def initialize(first_mark, second_mark, third_mark = nil)
@@ -16,11 +17,11 @@ class Frame
     return score if next_frame.nil?
 
     if strike? && next_frame.strike? && next_next_frame
-      2 * Game::MAX_SCORE + next_next_frame.first_shot.score
+      2 * MAX_SCORE + next_next_frame.first_shot.score
     elsif strike?
-      Game::MAX_SCORE + next_frame.first_shot.score + next_frame.second_shot.score
+      MAX_SCORE + next_frame.first_shot.score + next_frame.second_shot.score
     elsif spare?
-      Game::MAX_SCORE + next_frame.first_shot.score
+      MAX_SCORE + next_frame.first_shot.score
     else
       score
     end
@@ -31,10 +32,10 @@ class Frame
   end
 
   def strike?
-    first_shot.score == Game::MAX_SCORE
+    first_shot.score == MAX_SCORE
   end
 
   def spare?
-    first_shot.score + second_shot.score == Game::MAX_SCORE && !strike?
+    first_shot.score + second_shot.score == MAX_SCORE && !strike?
   end
 end
