@@ -26,14 +26,14 @@ class Frame
   end
 
   def score
-    [first_shot.score, second_shot.score, @third_shot.score].sum
+    [@first_shot.score, @second_shot.score, @third_shot.score].sum
   end
 
   def strike?
-    first_shot.score == Shot::MAX_SCORE
+    @first_shot.score == Shot::MAX_SCORE
   end
 
   def spare?
-    first_shot.score + second_shot.score == Shot::MAX_SCORE && !strike?
+    @first_shot.score + @second_shot.score == Shot::MAX_SCORE && !strike?
   end
 end
