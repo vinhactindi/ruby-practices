@@ -21,6 +21,6 @@ class Frame
   end
 
   def spare?
-    first_shot.score + second_shot.score == Game::MAX_SCORE && @third_shot.mark.nil?
+    first_shot.score + second_shot.score == Game::MAX_SCORE && !strike?
   end
 end
