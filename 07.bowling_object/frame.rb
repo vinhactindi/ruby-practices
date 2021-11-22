@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require './shot'
+require './game'
 
 class Frame
   attr_reader :first_shot, :second_shot
@@ -16,10 +17,10 @@ class Frame
   end
 
   def strike?
-    first_shot.score == 10
+    first_shot.score == Game::MAX_SCORE
   end
 
   def spare?
-    first_shot.score + second_shot.score == 10 && @third_shot.mark.nil?
+    first_shot.score + second_shot.score == Game::MAX_SCORE && @third_shot.mark.nil?
   end
 end

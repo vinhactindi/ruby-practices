@@ -3,6 +3,8 @@
 require './frame'
 
 class Game
+  MAX_SCORE = 10
+
   attr_reader :frames
 
   def initialize(score)
@@ -36,11 +38,11 @@ class Game
     return frame.score if next_frame.nil?
 
     if frame.strike? && next_frame.strike? && nnext_frame
-      20 + nnext_frame.first_shot.score
+      2 * MAX_SCORE + nnext_frame.first_shot.score
     elsif frame.strike?
-      10 + next_frame.first_shot.score + next_frame.second_shot.score
+      MAX_SCORE + next_frame.first_shot.score + next_frame.second_shot.score
     elsif frame.spare?
-      10 + next_frame.first_shot.score
+      MAX_SCORE + next_frame.first_shot.score
     else
       frame.score
     end
