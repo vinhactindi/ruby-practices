@@ -21,7 +21,7 @@ def printer(counter, fname = nil)
 end
 
 if ARGV.empty?
-  puts printer(counter($stdin.read))
+  printer(counter($stdin.read))
 else
   counters = ARGV.map { |fname| counter(File.read(fname)) }
   total = counters.each.with_index.reduce(TOTAL_INITIAL) do |accumulator, (counter, i)|
