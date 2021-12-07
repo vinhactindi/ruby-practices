@@ -28,5 +28,5 @@ else
     printer(counter, ARGV[i])
     accumulator.each.with_index.map { |sum, j| sum + counter[j] }
   end
-  printer(total, 'total')
+  printer(total, 'total') if counters.size > 1
 end
