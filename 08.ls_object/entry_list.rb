@@ -9,11 +9,11 @@ class EntryList
   end
 
   def to_s_with_columns(columns = 3)
-    culumn_height = (@entries.length / columns.to_f).ceil
+    column_height = (@entries.length / columns.to_f).ceil
     output = ''
-    (0..culumn_height - 1).each do |index|
+    (0..column_height - 1).each do |index|
       (0..columns).each do |n|
-        entry = @entries[index + n * culumn_height]
+        entry = @entries[index + n * column_height]
         output += entry.basename.ljust(24) if entry
       end
       output += "\n"
