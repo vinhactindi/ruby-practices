@@ -3,6 +3,7 @@
 require 'etc'
 require 'date'
 
+
 class Entry
   PERMISSIONS = { 0 => '---',
                   1 => '--x',
@@ -21,6 +22,13 @@ class Entry
             'link' => 'l',
             'socket' => 's' }.freeze
 
+  OCTAL = 8
+  PERMISSION_START_POS = -3
+  PERMISSION_END_POS = 3
+
+  SPACING = 8
+  SMALL_SPACING = 5
+
   def initialize(path)
     @path = path
     @stat = File::Stat.new(path)
@@ -36,7 +44,7 @@ class Entry
   end
 
   def permission
-    permission_numbers = @stat.mode.to_s(8)[-3, 3].chars.map(&:to_i)
+    permission_numbers = @stat.mode.to_s(OCTAL)[PERMISSION_START_POS, PERMISSION_END_POS].chars.map(&:to_i)
     permission_numbers.map { |number| PERMISSIONS[number] }.join
   end
 
@@ -76,11 +84,11 @@ class Entry
   def to_s
     output = type
     output += permission
-    output += nlink.rjust(5)
-    output += owner.center(8)
-    output += group.center(8)
-    output += size.rjust(8)
-    output += " #{month_and_day} #{year_or_time.rjust(5)} "
+    output += nlink.rjust(SMALL_SPACING)
+    output += owner.center(SPACING)
+    output += group.center(SPACING)
+    output += size.rjust(SPACING)
+    output += " #{month_and_day} #{year_or_time.rjust(SMALL_SPACING)} "
     output + basename
   end
 end
