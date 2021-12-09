@@ -3,7 +3,6 @@
 require 'etc'
 require 'date'
 
-
 class Entry
   PERMISSIONS = { 0 => '---',
                   1 => '--x',
