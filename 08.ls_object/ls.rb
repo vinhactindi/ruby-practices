@@ -4,6 +4,21 @@
 require './entry_list'
 require './app_option'
 
+def entry_paths_of(dir, reverse: false, all: false)
+  output = Dir.glob("#{dir}/*").sort
+  output = Dir.glob("#{dir}/*", File::FNM_DOTMATCH).sort if all
+  output.reverse! if reverse
+  output
+end
+
+def printer(entries, view_as_list: false)
+  if view_as_list
+    puts entries.to_s_with_stats
+  else
+    puts entries.to_s_with_columns
+  end
+end
+
 option = AppOption.new
 paths = option.extras.empty? ? ['./'] : option.extras
 
@@ -13,17 +28,13 @@ paths.each do |path|
     next
   end
 
-  entry_paths = Dir.glob("#{path}/*").sort
-  entry_paths = Dir.glob("#{path}/*", File::FNM_DOTMATCH).sort if option.has?('a')
-  entry_paths.reverse! if option.has?('r')
+  entry_paths = entry_paths_of(path, reverse: option.has?('r'), all: option.has?('a'))
 
   entries = EntryList.new(entry_paths)
 
   puts "#{path}:" if option.extras.length > 1
-  if option.has?('l')
-    puts entries.to_s_with_stats
-  else
-    puts entries.to_s_with_columns
-  end
+
+  printer(entries, view_as_list: option.has?('l'))
+
   puts if option.extras.length > 1
 end
