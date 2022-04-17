@@ -15,7 +15,7 @@ class Entry
   end
 
   def to_s
-    counters = AppOptions.has?('l') ? [@lines] : [@lines, @words, @bytes]
+    counters = AppOptions.instance.has?('l') ? [@lines] : [@lines, @words, @bytes]
     "#{counters.map { |number| number.to_s.rjust(8) }.join} #{name}"
   end
 end

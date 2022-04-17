@@ -4,10 +4,8 @@
 require_relative './entry'
 require_relative './total'
 
-AppOptions.instance
-
-if ARGV.empty?
+if AppOptions.instance.extras.empty?
   puts Entry.new($stdin.read)
 else
-  puts Total.new(ARGV.map { |fname| Entry.new(File.read(fname), fname) })
+  puts Total.new(AppOptions.instance.extras.map { |fname| Entry.new(File.read(fname), fname) })
 end

@@ -6,13 +6,15 @@ require 'optparse'
 class AppOptions
   include Singleton
 
-  def self.instance
-    # rubocop:disable Style/ClassVars
-    @@instance ||= ARGV.getopts('l')
-    # rubocop:enable Style/ClassVars
+  def initialize
+    @options = ARGV.getopts('l')
   end
 
-  def self.has?(name)
-    !!AppOptions.instance[name]
+  def has?(name)
+    @options[name]
+  end
+
+  def extras
+    ARGV
   end
 end
