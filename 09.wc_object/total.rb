@@ -4,9 +4,9 @@ class Total
   def initialize(entries)
     @entries = entries
 
-    @lines = entries.collect(&:lines).sum
-    @words = entries.collect(&:words).sum
-    @bytes = entries.collect(&:bytes).sum
+    @lines = entries.sum(&:lines)
+    @words = entries.sum(&:words)
+    @bytes = entries.sum(&:bytes)
   end
 
   def to_s
